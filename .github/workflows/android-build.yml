@@ -41,6 +41,10 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          # The legacy `tools` package is no longer available on all SDK mirrors.
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
 
       - name: Set up Gradle 9.6
         uses: gradle/actions/setup-gradle@v4
