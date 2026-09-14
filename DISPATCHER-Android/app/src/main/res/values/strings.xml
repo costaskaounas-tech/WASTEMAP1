@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DISPATCHER</string>
+    <string name="app_url" translatable="false">https://nursego-athens.costaskaounas.chatgpt.site</string>
+    <string name="loading">Φόρτωση</string>
+    <string name="load_error_title">Δεν ήταν δυνατή η σύνδεση</string>
+    <string name="load_error_message">Έλεγξε τη σύνδεση στο διαδίκτυο και δοκίμασε ξανά.</string>
+    <string name="retry">Δοκίμασε ξανά</string>
+    <string name="no_file_picker">Δεν βρέθηκε εφαρμογή επιλογής αρχείων.</string>
+    <string name="no_app_for_link">Δεν βρέθηκε εφαρμογή για το άνοιγμα αυτού του συνδέσμου.</string>
+</resources>
