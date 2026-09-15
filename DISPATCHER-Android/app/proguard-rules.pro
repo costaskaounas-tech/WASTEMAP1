@@ -1,1 +1,1 @@
-# No project-specific rules are required for the native WebView shell.
+# No project-specific rules are required for the Trusted Web Activity launcher.

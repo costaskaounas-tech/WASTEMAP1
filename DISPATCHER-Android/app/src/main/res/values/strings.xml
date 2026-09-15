@@ -2,10 +2,6 @@
 <resources>
     <string name="app_name">DISPATCHER</string>
     <string name="app_url" translatable="false">https://nursego-athens.costaskaounas.chatgpt.site</string>
-    <string name="loading">Φόρτωση</string>
-    <string name="load_error_title">Δεν ήταν δυνατή η σύνδεση</string>
-    <string name="load_error_message">Έλεγξε τη σύνδεση στο διαδίκτυο και δοκίμασε ξανά.</string>
-    <string name="retry">Δοκίμασε ξανά</string>
-    <string name="no_file_picker">Δεν βρέθηκε εφαρμογή επιλογής αρχείων.</string>
-    <string name="no_app_for_link">Δεν βρέθηκε εφαρμογή για το άνοιγμα αυτού του συνδέσμου.</string>
+    <string name="asset_statements" translatable="false">[{&quot;relation&quot;:[&quot;delegate_permission/common.handle_all_urls&quot;],&quot;target&quot;:{&quot;namespace&quot;:&quot;web&quot;,&quot;site&quot;:&quot;https://nursego-athens.costaskaounas.chatgpt.site&quot;}}]</string>
+    <string name="no_compatible_browser">Δεν βρέθηκε συμβατός browser για το DISPATCHER.</string>
 </resources>

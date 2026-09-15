@@ -71,18 +71,18 @@ jobs:
       - name: Prepare downloads
         run: |
           mkdir -p DISPATCHER-Android/release
-          cp DISPATCHER-Android/app/build/outputs/apk/debug/app-debug.apk DISPATCHER-Android/release/DISPATCHER-1.0.1-debug.apk
+          cp DISPATCHER-Android/app/build/outputs/apk/debug/app-debug.apk DISPATCHER-Android/release/DISPATCHER-1.1.0-debug.apk
           cd DISPATCHER-Android
           zip -r release/DISPATCHER-Android-Studio.zip . -x ".gradle/*" ".kotlin/*" "app/build/*" "build/*" "release/*" "local.properties" "*.jks" "*.keystore"
           cd release
-          sha256sum DISPATCHER-1.0.1-debug.apk DISPATCHER-Android-Studio.zip > SHA256SUMS.txt
+          sha256sum DISPATCHER-1.1.0-debug.apk DISPATCHER-Android-Studio.zip > SHA256SUMS.txt
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: dispatcher-android-build
           path: |
-            DISPATCHER-Android/release/DISPATCHER-1.0.1-debug.apk
+            DISPATCHER-Android/release/DISPATCHER-1.1.0-debug.apk
             DISPATCHER-Android/release/DISPATCHER-Android-Studio.zip
             DISPATCHER-Android/release/SHA256SUMS.txt
           if-no-files-found: error
