@@ -1,0 +1,2 @@
+fbcbbe3c46446bf6d04fd941ef64304e0af9dc39a59eb64f24389ac116c28df3  DISPATCHER-1.1.0-debug.apk
+10e4dbb2f516dacc890be36bc5aab47392e8a285d86cf1de4ff2fc603d4a4477  DISPATCHER-Android-Studio.zip

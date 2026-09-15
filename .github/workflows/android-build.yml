@@ -1,0 +1,100 @@
+name: Build DISPATCHER Android
+
+on:
+  push:
+    branches:
+      - dispatcher-android
+    paths-ignore:
+      - "DISPATCHER-Android/gradle/**"
+      - "DISPATCHER-Android/gradlew"
+      - "DISPATCHER-Android/gradlew.bat"
+      - "DISPATCHER-Android/release/**"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dispatcher-android-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          ref: dispatcher-android
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          # The legacy `tools` package is no longer available on all SDK mirrors.
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+
+      - name: Set up Gradle 9.6
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "9.6.0"
+
+      - name: Install Android SDK packages
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Generate Gradle wrapper
+        run: gradle -p DISPATCHER-Android wrapper --gradle-version 9.6.0
+
+      - name: Test and build APK
+        run: |
+          DISPATCHER-Android/gradlew -p DISPATCHER-Android :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --no-daemon --stacktrace
+
+      - name: Verify APK signature and package
+        run: |
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose --print-certs DISPATCHER-Android/app/build/outputs/apk/debug/app-debug.apk
+          "$ANDROID_HOME/build-tools/36.0.0/aapt2" dump badging DISPATCHER-Android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Prepare downloads
+        run: |
+          mkdir -p DISPATCHER-Android/release
+          cp DISPATCHER-Android/app/build/outputs/apk/debug/app-debug.apk DISPATCHER-Android/release/DISPATCHER-1.1.0-debug.apk
+          cd DISPATCHER-Android
+          zip -r release/DISPATCHER-Android-Studio.zip . -x ".gradle/*" ".kotlin/*" "app/build/*" "build/*" "release/*" "local.properties" "*.jks" "*.keystore"
+          cd release
+          sha256sum DISPATCHER-1.1.0-debug.apk DISPATCHER-Android-Studio.zip > SHA256SUMS.txt
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dispatcher-android-build
+          path: |
+            DISPATCHER-Android/release/DISPATCHER-1.1.0-debug.apk
+            DISPATCHER-Android/release/DISPATCHER-Android-Studio.zip
+            DISPATCHER-Android/release/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish generated downloads to branch
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             DISPATCHER-Android/gradle             DISPATCHER-Android/gradlew             DISPATCHER-Android/gradlew.bat             DISPATCHER-Android/release
+          if ! git diff --cached --quiet; then
+            git commit -m "Build DISPATCHER Android APK [skip ci]"
+            git push origin HEAD:dispatcher-android
+          fi

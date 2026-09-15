@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DISPATCHER</string>
+    <string name="app_url" translatable="false">https://nursego-athens.costaskaounas.chatgpt.site</string>
+    <string name="asset_statements" translatable="false">[{&quot;relation&quot;:[&quot;delegate_permission/common.handle_all_urls&quot;],&quot;target&quot;:{&quot;namespace&quot;:&quot;web&quot;,&quot;site&quot;:&quot;https://nursego-athens.costaskaounas.chatgpt.site&quot;}}]</string>
+    <string name="no_compatible_browser">Δεν βρέθηκε συμβατός browser για το DISPATCHER.</string>
+</resources>
