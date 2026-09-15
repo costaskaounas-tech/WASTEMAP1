@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.browser.trusted.TrustedWebUtils
+import androidx.browser.customtabs.TrustedWebUtils
 
 /**
  * Launches DISPATCHER as a Trusted Web Activity (TWA).
